@@ -211,6 +211,31 @@ dtype: int64
 
 ## 최종 모델 학습
 
+### 모델 구성
+
+이진 분류를 위한 최종 모델은 XGBoost 라이브러리의 `XGBClassifier`를 사용하여 구성하였습니다. `dart` 부스터와 함께 다음의 하이퍼파라미터 설정을 사용하였습니다:
+
+- `max_depth`: 3 — 트리의 최대 깊이.
+- `learning_rate`: 0.1 — 학습률.
+- `n_estimators`: 100 — 부스팅 라운드 수.
+- `subsample`: 0.8 — 각 트리에 대한 트레이닝 데이터 샘플 비율.
+- `colsample_bytree`: 0.6 — 각 트리에 대한 피처 샘플링 비율.
+- `colsample_bylevel`: 0.7 — 각 레벨에 대한 피처 샘플링 비율.
+- `colsample_bynode`: 0.8 — 각 노드에 대한 피처 샘플링 비율.
+- `max_bin`: 256 — 히스토그램의 최대 bin 개수.
+- `objective`: 'binary:logistic' — 이진 분류를 위한 로지스틱 회귀 목적.
+- `sample_type`: "weighted" — 더트 부스터의 샘플링 유형.
+
+### 학습 과정
+
+모델 학습은 `X_train` 트레이닝 세트와 `y_train` 레이블을 사용하여 수행되었습니다. 학습 과정에서는 `watchlist`에 지정된 트레이닝 세트와 검증 세트(`X_val`, `y_val`)의 성능을 모니터링하였으며, `early_stopping_rounds=50`을 설정하여 조기 종료 기능을 활성화하였습니다.
+
+### 모델 평가
+
+학습된 모델은 검증 데이터셋 `X_val`에 대한 예측을 수행하였으며, 성능 평가를 위해 혼동 행렬(confusion matrix)과 AUC 점수를 출력하였습니다. 다음은 모델 평가 결과입니다:
+
+
+### 조정
 
 
 ## 결론
